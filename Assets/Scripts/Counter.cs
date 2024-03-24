@@ -11,7 +11,7 @@ public class Counter : MonoBehaviour
 
     public int Number { get; private set; }
 
-    public UnityAction<int> NumberChanged;
+    public event UnityAction<int> NumberChanged;
 
     private void Start()
     {
@@ -28,9 +28,11 @@ public class Counter : MonoBehaviour
 
     private IEnumerator AddNumber()
     {
+        WaitForSeconds waitTime = new WaitForSeconds(_timeBetweenIncrease);
+
         while (true)
         {
-            yield return new WaitForSeconds(_timeBetweenIncrease);
+            yield return waitTime;
 
             Number++;
             NumberChanged?.Invoke(Number);
